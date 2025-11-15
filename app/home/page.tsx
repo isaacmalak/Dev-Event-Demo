@@ -13,6 +13,12 @@ export default function Home() {
         Hackathons, Meetups, and conferences. All in one place
       </p>
       <ExploreButton />
+      <h3>Featured Events</h3>
+      <ul > 
+        <li> 
+          
+        </li>
+      </ul>
     </section>
   );
 }
