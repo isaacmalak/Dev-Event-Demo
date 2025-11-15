@@ -28,7 +28,7 @@ export default function RootLayout({
       <body
         className={`${schibstedGrotesk.variable} ${martianMono.variable} antialiased`}
       >
-        <div className="absolute inset-0 top-0 min-h-screen z-[-1]">
+        <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
           <LightRays
             raysOrigin="top-center"
             raysColor="#00ffff"
@@ -42,10 +42,7 @@ export default function RootLayout({
             className="custom-rays"
           />
         </div>
-        <main> 
-
-          {children}
-        </main>
+        <main>{children}</main>
       </body>
     </html>
   );

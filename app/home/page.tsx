@@ -4,7 +4,7 @@ import { ExploreButton } from "./components/ExploreButton";
 
 export default function Home() {
   return (
-    <section className="flex flex-col justify-center items-center w-full h-full bg-transparent dark:bg-transparent">
+    <section className="flex h-full w-full flex-col items-center justify-center bg-transparent dark:bg-transparent">
       <h1 className="text-center">
         The Hub for every developing events <br />
         Event you can't miss
