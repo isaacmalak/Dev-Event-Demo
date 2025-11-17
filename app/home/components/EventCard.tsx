@@ -1,4 +1,3 @@
-import { Timestamp } from "next/dist/server/lib/cache-handlers/types";
 import Image from "next/image";
 import Link from "next/link";
 
