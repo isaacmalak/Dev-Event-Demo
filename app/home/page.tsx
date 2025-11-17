@@ -63,15 +63,11 @@ export default function Home() {
         Hackathons, Meetups, and conferences. All in one place
       </p>
       <ExploreButton />
-      <div>
-        <h3>Featured Events</h3>
-        <ul>
-          {events.map((e) => (
-            <li key={e.title}>
-              <EventCard {...e} />
-            </li>
-          ))}
-        </ul>
+      <h3 className="mb-4">Featured Events</h3>
+      <div className="events">
+        {events.map((event) => (
+          <EventCard {...event} key={event.title} />
+        ))}
       </div>
     </section>
   );
