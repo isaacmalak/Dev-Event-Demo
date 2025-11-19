@@ -1,13 +1,19 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-   experimental: 
-   {
-    turbopackFileSystemCacheForDev: true , 
-    
-   },
-   skipTrailingSlashRedirect: true,
-   async rewrites() {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      }
+    ],
+  },
+  experimental: {
+    turbopackFileSystemCacheForDev: true,
+  },
+  skipTrailingSlashRedirect: true,
+  async rewrites() {
     return [
       {
         source: "/ingest/static/:path*",
@@ -18,7 +24,7 @@ const nextConfig: NextConfig = {
         destination: "https://eu.i.posthog.com/:path*",
       },
     ];
-   },
+  },
 };
 
 export default nextConfig;
