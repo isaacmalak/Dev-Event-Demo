@@ -15,7 +15,6 @@ export function EventCard({ title, image, date, location, time }: Props) {
       href="/events/"
       id="event-card"
       onClick={() => {
-        console.log(process.env.NEXT_PUBLIC_POSTHOG_KEY, "<========================="); 
         posthog.capture("my event", { property: "value" });
       }}
     >
@@ -30,7 +29,7 @@ export function EventCard({ title, image, date, location, time }: Props) {
         <Image src="/icons/pin.svg" alt={title} width={14} height={14} />
         <p> {location}</p>
       </div>
-      <p className="title"> ${title} </p>
+      <p className="title"> {title} </p>
       <div className="datetime">
         <div>
           <Image

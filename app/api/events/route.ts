@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { Event } from "../../../database/index";
 
 import { v2 as cloudinary } from "cloudinary";
-import { resolve } from "path";
 
 export async function POST(req: NextRequest) {
   try {
@@ -61,12 +60,27 @@ export async function POST(req: NextRequest) {
     );
   } catch (e) {
     console.log("[EVENTS]", e);
-    
+
     return NextResponse.json(
       {
         message: "Events Post request failed",
         error: e instanceof Error ? e.message : "Unknown",
       },
+      { status: 500 },
+    );
+  }
+}
+
+export async function GET() {
+  try {
+    await connectToDatabase();
+
+    const events = await Event.find().sort({ createdAt: -1 });
+
+    return NextResponse.json({events}, { status: 200 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Couldn`t fetch events", error: error },
       { status: 500 },
     );
   }
