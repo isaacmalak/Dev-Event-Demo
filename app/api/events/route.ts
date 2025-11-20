@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Event } from "../../../database/index";
 
 import { v2 as cloudinary } from "cloudinary";
+import { ObjectId } from "mongoose";
 
 export async function POST(req: NextRequest) {
   try {
@@ -77,7 +78,7 @@ export async function GET() {
 
     const events = await Event.find().sort({ createdAt: -1 });
 
-    return NextResponse.json({events}, { status: 200 });
+    return NextResponse.json({ events }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Couldn`t fetch events", error: error },
