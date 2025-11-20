@@ -4,7 +4,7 @@ import { Schema, model, models, Document } from "mongoose";
 /** Event document type for strong TS safety */
 export interface EventDocument extends Document {
   title: string;
-  slug: string;
+  
   description: string;
   overview: string;
   image: string;
@@ -25,7 +25,7 @@ export interface EventDocument extends Document {
 const EventSchema = new Schema<EventDocument>(
   {
     title: { type: String, required: true, trim: true },
-    slug: { type: String, unique: true, index: true },
+    
     description: { type: String, required: true },
     overview: { type: String, required: true },
     image: { type: String, required: true },
@@ -44,7 +44,6 @@ const EventSchema = new Schema<EventDocument>(
 
 /**
  * Pre-save:
- * - Generate slug from title (only if title changed).
  * - Normalize date to ISO format.
  * - Normalize time to HH:MM format.
  */
