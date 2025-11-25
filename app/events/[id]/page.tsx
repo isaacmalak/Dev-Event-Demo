@@ -81,6 +81,8 @@ export default async function EventDetails({
     },
   } = await result.json();
 
+  const bookings = 10;
+
   if (!_id) return notFound();
 
   return (
@@ -128,11 +130,19 @@ export default async function EventDetails({
             <h2>About the organizer</h2>
             <p>{organizer}</p>
           </section>
-          <EventTags tags={JSON.parse(tags)}/>
+          <EventTags tags={JSON.parse(tags)} />
         </div>
         {/* right side - Event booking */}
         <aside className="booking">
-          <p className="text-lg font-semibold"> Book Event</p>
+          <div className="signup-card">
+            <h2>Book Your Spot</h2>
+
+            <p className="text-sm">
+              {bookings > 0
+                ? `Join ${bookings} people who have already booked their spot!`
+                : "Be the first to book this event"}
+            </p>
+          </div>
         </aside>
       </div>
     </section>
