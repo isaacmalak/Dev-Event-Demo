@@ -1,4 +1,7 @@
+import { EventCard } from "@/app/home/components/EventCard";
 import { BookEvent } from "@/components/BookEvent";
+import { EventDocument } from "@/database/event.model";
+import { getSimilarEventsByTitle } from "@/lib/actions/events.actions";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 function EventDetailItem({
@@ -56,6 +59,7 @@ function EventTags({ tags }: { tags: string[] }) {
     </div>
   );
 }
+
 export default async function EventDetails({
   params,
 }: {
@@ -66,6 +70,7 @@ export default async function EventDetails({
   const result = await fetch(`${url}/api/events/${id}`);
   const {
     event: {
+      title,
       description,
       image,
       overview,
@@ -76,7 +81,6 @@ export default async function EventDetails({
       agenda,
       audience,
       tags,
-      details,
       organizer,
       _id,
     },
@@ -86,10 +90,12 @@ export default async function EventDetails({
 
   if (!_id) return notFound();
 
+  const similarEvents: EventDocument[] = await getSimilarEventsByTitle(title);
   return (
     <section id="event">
       <div className="header">
-        <h1> Event Description</h1>
+        <h1> {title}</h1>
+        <h2> Event Description</h2>
         <p> {description}</p>
       </div>
 
@@ -146,6 +152,15 @@ export default async function EventDetails({
             <BookEvent />
           </div>
         </aside>
+      </div>
+      <div className="flex w-full flex-col gap-4 pt-20">
+        <h2 className="text-2xl font-bold">Similar Events</h2>
+        <div className="events">
+          {similarEvents.length > 0 &&
+            similarEvents.map((event: EventDocument) => (
+              <EventCard key={event.id}{...event} />
+            ))}
+        </div>
       </div>
     </section>
   );

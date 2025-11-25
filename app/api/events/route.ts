@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { Event } from "../../../database/index";
 
 import { v2 as cloudinary } from "cloudinary";
-import { ObjectId } from "mongoose";
 
 export async function POST(req: NextRequest) {
   try {
