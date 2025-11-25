@@ -1,3 +1,4 @@
+import { BookEvent } from "@/components/BookEvent";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 function EventDetailItem({
@@ -142,6 +143,7 @@ export default async function EventDetails({
                 ? `Join ${bookings} people who have already booked their spot!`
                 : "Be the first to book this event"}
             </p>
+            <BookEvent />
           </div>
         </aside>
       </div>
