@@ -7,7 +7,6 @@ export default async function Home() {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`,
   );
   const { events } = await response.json();
-  console.log(events, 'XXXXXX')
 
   return (
     <section>
@@ -24,7 +23,7 @@ export default async function Home() {
         {events &&
         events.length >0 &&
           events.map((event: EventDocument) => (
-            <EventCard {...event} key={event.title} />
+            <EventCard key={event._id.toString()} {...event}/>
           ))}
       </div>
     </section>
