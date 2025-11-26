@@ -131,13 +131,13 @@ export default async function EventDetails({
             />
           </section>
 
-          <EventAgenda agendaItems={JSON.parse(agenda[0])} />
+          <EventAgenda agendaItems={agenda} />
 
           <section className="flex-col">
             <h2>About the organizer</h2>
             <p>{organizer}</p>
           </section>
-          <EventTags tags={JSON.parse(tags)} />
+          <EventTags tags={tags} />
         </div>
         {/* right side - Event booking */}
         <aside className="booking">
@@ -158,7 +158,7 @@ export default async function EventDetails({
         <div className="events">
           {similarEvents.length > 0 &&
             similarEvents.map((event: EventDocument) => (
-              <EventCard key={event.id}{...event} />
+              <EventCard key={event.id} {...event} />
             ))}
         </div>
       </div>
