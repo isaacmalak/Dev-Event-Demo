@@ -154,11 +154,13 @@ export default async function EventDetails({
         </aside>
       </div>
       <div className="flex w-full flex-col gap-4 pt-20">
-        <h2 className="text-2xl font-bold">Similar Events</h2>
         <div className="events">
           {similarEvents.length > 0 &&
             similarEvents.map((event: EventDocument) => (
-              <EventCard key={event.id} {...event} />
+              <>
+                <h2 className="text-2xl font-bold">Similar Events</h2>
+                <EventCard key={event.id} {...event} />
+              </>
             ))}
         </div>
       </div>
