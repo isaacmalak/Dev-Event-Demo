@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="yellow">
       <body
-        className={`${schibstedGrotesk.variable} ${martianMono.variable} antialiased`}
+        className={`${schibstedGrotesk.variable} ${martianMono.variable} antialiased min-h-screen flex flex-col`}
       >
         <NavBar/>
         <div className="absolute inset-0 top-0 z-[-1] min-h-screen">
@@ -44,7 +44,7 @@ export default function RootLayout({
             className="custom-rays"
           />
         </div>
-        <main>{children}</main>
+        <main className="flex flex-1 ">{children}</main>
       </body>
     </html>
   );

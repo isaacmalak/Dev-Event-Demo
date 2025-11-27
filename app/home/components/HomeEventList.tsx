@@ -1,0 +1,18 @@
+import { EventDocument } from "@/database/event.model";
+import { EventCard } from "./EventCard";
+
+export async function HomeEventList() {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`,
+  );
+  const { events } = await response.json();
+  return (
+    <div className="events">
+      {events &&
+        events.length > 0 &&
+        events.map((event: EventDocument) => (
+          <EventCard key={event.id} {...event} id={event.id} />
+        ))}
+    </div>
+  );
+}
