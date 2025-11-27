@@ -1,10 +1,9 @@
-import { Schema, model, models, Document } from "mongoose";
-
+import { Schema, model, models} from "mongoose";
 
 /** Event document type for strong TS safety */
-export interface EventDocument extends Document {
+export interface EventDocument {
+  id: string;
   title: string;
-  
   description: string;
   overview: string;
   image: string;
@@ -25,7 +24,6 @@ export interface EventDocument extends Document {
 const EventSchema = new Schema<EventDocument>(
   {
     title: { type: String, required: true, trim: true },
-    
     description: { type: String, required: true },
     overview: { type: String, required: true },
     image: { type: String, required: true },
@@ -39,8 +37,13 @@ const EventSchema = new Schema<EventDocument>(
     organizer: { type: String, required: true },
     tags: { type: [String], required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
+
+EventSchema.method("toJSON", function () {
+  const { _id, __v, ...object } = this.toObject();
+  return { ...object, id: _id.toString() }; // <-- here it is as string
+});
 
 /**
  * Pre-save:
@@ -51,7 +54,7 @@ EventSchema.pre("save", function (next) {
   const event = this as EventDocument;
 
   // Generate new slug when title changes
-  
+
   // Validate required string fields are non-empty
   const requiredFields: Array<keyof EventDocument> = [
     "title",
@@ -68,7 +71,9 @@ EventSchema.pre("save", function (next) {
   ];
   for (const field of requiredFields) {
     if (!event[field] || String(event[field]).trim().length === 0) {
-      return next(new Error(`Field '${field}' is required and cannot be empty.`));
+      return next(
+        new Error(`Field '${field}' is required and cannot be empty.`),
+      );
     }
   }
 

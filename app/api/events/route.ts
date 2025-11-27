@@ -28,9 +28,9 @@ export async function POST(req: NextRequest) {
         { status: 400 },
       );
     }
-    const tags  = JSON.parse(formData.get('tags') as string);
-    const agenda  = JSON.parse(formData.get('agenda') as string);
-  
+    const tags = JSON.parse(formData.get("tags") as string);
+    const agenda = JSON.parse(formData.get("agenda") as string);
+
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
@@ -51,7 +51,11 @@ export async function POST(req: NextRequest) {
     });
     event.image = (imgUploadResult as { secure_url: string }).secure_url;
 
-    const createdEvent = await Event.create({...event , tags: tags , agenda: agenda });
+    const createdEvent = await Event.create({
+      ...event,
+      tags: tags,
+      agenda: agenda,
+    });
 
     return NextResponse.json(
       {
@@ -78,8 +82,8 @@ export async function GET() {
     await connectToDatabase();
 
     const events = await Event.find().sort({ createdAt: -1 });
-
-    return NextResponse.json({ events }, { status: 200 });
+    const eventsJson = events.map((event) => event);
+    return NextResponse.json({ events: eventsJson }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: "Couldn`t fetch events", error: error },

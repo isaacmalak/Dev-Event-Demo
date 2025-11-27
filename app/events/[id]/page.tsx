@@ -88,7 +88,7 @@ export default async function EventDetails({
 
   const bookings = 10;
 
-  if (!_id) return notFound();
+  if (!title) return notFound();
 
   const similarEvents: EventDocument[] = await getSimilarEventsByTitle(title);
   return (
@@ -157,10 +157,13 @@ export default async function EventDetails({
         <div className="events">
           {similarEvents.length > 0 &&
             similarEvents.map((event: EventDocument) => (
-              <>
+              <div key={event.id}>
                 <h2 className="text-2xl font-bold">Similar Events</h2>
-                <EventCard key={event.id} {...event} />
-              </>
+                <EventCard
+                  key={event.id}
+                  {...event}
+                />
+              </div>
             ))}
         </div>
       </div>

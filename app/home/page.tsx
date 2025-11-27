@@ -7,6 +7,7 @@ export default async function Home() {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/events`,
   );
   const { events } = await response.json();
+  console.log("Events fetched on home page:", events);
 
   return (
     <section>
@@ -21,9 +22,9 @@ export default async function Home() {
       <h3 className="mb-4">Featured Events</h3>
       <div className="events">
         {events &&
-        events.length >0 &&
+          events.length > 0 &&
           events.map((event: EventDocument) => (
-            <EventCard key={event._id.toString()} {...event}/>
+            <EventCard key={event.id} {...event} id={event.id} />
           ))}
       </div>
     </section>
