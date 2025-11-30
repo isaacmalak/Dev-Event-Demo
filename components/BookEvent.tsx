@@ -1,11 +1,17 @@
 "use client";
+import { BookingEvent } from "@/lib/actions/booking.actions";
 import { useState } from "react";
 
-export function BookEvent() {
+export function BookEventForm({ eventId }: { eventId: string }) {
   const [email, setEmail] = useState("");
   const [isSubmitted, setSubmission] = useState(false);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
+    console.log("THIS IS THE EMAIL ===============================================>");
+    console.log("THIS IS THE EVENT ID ===============================================>", eventId); 
+
+    const {booking} = await BookingEvent({ userEmail: email, eventId: eventId });
+    if(!booking) return;
     event.preventDefault();
     setTimeout(() => {
       setSubmission(true);

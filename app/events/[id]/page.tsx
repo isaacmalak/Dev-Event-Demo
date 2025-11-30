@@ -1,5 +1,5 @@
 import { EventCard } from "@/app/home/components/EventCard";
-import { BookEvent } from "@/components/BookEvent";
+import { BookEventForm } from "@/components/BookEvent";
 import { EventDocument } from "@/database/event.model";
 import { getSimilarEventsByTitle } from "@/lib/actions/events.actions";
 import Image from "next/image";
@@ -21,24 +21,6 @@ function EventDetailItem({
   );
 }
 function EventAgenda({ agendaItems }: { agendaItems: string[] }) {
-  // try {
-  //      if (typeof agendaItems === "string") {
-  //           const parsed = JSON.parse(agendaItems);
-  //           agendaItems = Array.isArray(parsed) ? parsed : [parsed];
-  //      } else if (!Array.isArray(agendaItems)) {
-  //           agendaItems = [agendaItems];
-  //      }
-  // } catch {
-  //      // fallback for non-JSON strings like "[a, b]" or '["a","b"]'
-  //      if (typeof agendaItems === "string") {
-  //           const stripped = agendaItems.replace(/^\s*\[|\]\s*$/g, "").trim();
-  //           agendaItems = stripped
-  //                ? stripped.split(",").map((s) => s.trim().replace(/^"|"$/g, ""))
-  //                : [];
-  //      } else {
-  //           agendaItems = [agendaItems];
-  //      }
-  // }
   return (
     <div className="agenda">
       <h2>Agenda</h2>
@@ -66,7 +48,7 @@ export default async function EventDetails({
   params: Promise<{ id: string }>;
 }) {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const { id } = await params;
+  const { id } = await params;  
   const result = await fetch(`${url}/api/events/${id}`);
   const {
     event: {
@@ -149,7 +131,7 @@ export default async function EventDetails({
                 ? `Join ${bookings} people who have already booked their spot!`
                 : "Be the first to book this event"}
             </p>
-            <BookEvent />
+            <BookEventForm eventId={_id} />
           </div>
         </aside>
       </div>
