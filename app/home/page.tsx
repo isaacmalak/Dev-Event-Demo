@@ -1,5 +1,6 @@
 import { ExploreButton } from "./components/ExploreButton";
 import { Suspense } from "react";
+import { EventListSkeleton } from "./components/EventListSkeleton";
 import { HomeEventList } from "./components/HomeEventList";
 
 export default async function Home() {
@@ -15,11 +16,7 @@ export default async function Home() {
       <ExploreButton />
 
       <div className="flex flex-1">
-        <Suspense
-          fallback={
-            <div className="animate-in flex w-full flex-1 flex-col items-center justify-center rounded-3xl bg-gray-700 text-black"></div>
-          }
-        >
+        <Suspense fallback={<EventListSkeleton />}>
           <HomeEventList />
         </Suspense>
       </div>
