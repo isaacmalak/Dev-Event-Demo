@@ -7,12 +7,15 @@ export async function HomeEventList() {
   );
   const { events } = await response.json();
   return (
-    <div className="events">
-      {events &&
-        events.length > 0 &&
-        events.map((event: EventDocument) => (
-          <EventCard key={event.id} {...event} id={event.id} />
-        ))}
+    <div className="m-auto flex flex-col">
+      <h3 className="mb-4">Featured Events</h3>
+      <div className="events">
+        {events &&
+          events.length > 0 &&
+          events.map((event: EventDocument) => (
+            <EventCard key={event.id} {...event} id={event.id} />
+          ))}
+      </div>
     </div>
   );
 }

@@ -13,11 +13,11 @@ export default async function Home() {
         Hackathons, Meetups, and conferences. All in one place
       </p>
       <ExploreButton />
-      <h3 className="mb-4">Featured Events</h3>
+
       <div className="flex flex-1">
         <Suspense
           fallback={
-            <div className="flex w-full flex-1 flex-col items-center justify-center bg-gray-700 rounded-3xl animate-bounce text-black"></div>
+            <div className="animate-in flex w-full flex-1 flex-col items-center justify-center rounded-3xl bg-gray-700 text-black"></div>
           }
         >
           <HomeEventList />
