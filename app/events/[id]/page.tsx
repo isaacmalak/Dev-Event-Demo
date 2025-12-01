@@ -4,6 +4,7 @@ import { EventDocument } from "@/database/event.model";
 import { getSimilarEventsByTitle } from "@/lib/actions/events.actions";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 function EventDetailItem({
   icon,
   label,
@@ -48,7 +49,7 @@ export default async function EventDetails({
   params: Promise<{ id: string }>;
 }) {
   const url = process.env.NEXT_PUBLIC_BASE_URL;
-  const { id } = await params;  
+  const { id } = await params;
   const result = await fetch(`${url}/api/events/${id}`);
   const {
     event: {
@@ -74,81 +75,88 @@ export default async function EventDetails({
 
   const similarEvents: EventDocument[] = await getSimilarEventsByTitle(title);
   return (
-    <section id="event">
-      <div className="header">
-        <h1> {title}</h1>
-        <h2> Event Description</h2>
-        <p> {description}</p>
-      </div>
-
-      <div className="details">
-        {/* Left side - Event details*/}
-        <div className="content">
-          <Image
-            src={image}
-            alt="Event Image"
-            width={800}
-            height={800}
-            className="banner"
-          />
-          <section className="flex-col">
-            <h2>Overview</h2>
-            <p>{overview}</p>
-          </section>
-
-          <section className="flex-col">
-            <h2>Event Details</h2>
-            <EventDetailItem
-              icon="/icons/calendar.svg"
-              alt="calendar"
-              label={date}
-            />
-            <EventDetailItem icon="/icons/pin.svg" alt="pin" label={location} />
-            <EventDetailItem icon="/icons/clock.svg" alt="clock" label={time} />
-            <EventDetailItem icon="/icons/mode.svg" alt="mode" label={mode} />
-            <EventDetailItem
-              icon="/icons/audience.svg"
-              alt="audience"
-              label={audience}
-            />
-          </section>
-
-          <EventAgenda agendaItems={agenda} />
-
-          <section className="flex-col">
-            <h2>About the organizer</h2>
-            <p>{organizer}</p>
-          </section>
-          <EventTags tags={tags} />
+    <Suspense fallback={<div>Loading event details...</div>}>
+      <section id="event">
+        <div className="header">
+          <h1> {title}</h1>
+          <h2> Event Description</h2>
+          <p> {description}</p>
         </div>
-        {/* right side - Event booking */}
-        <aside className="booking">
-          <div className="signup-card">
-            <h2>Book Your Spot</h2>
 
-            <p className="text-sm">
-              {bookings > 0
-                ? `Join ${bookings} people who have already booked their spot!`
-                : "Be the first to book this event"}
-            </p>
-            <BookEventForm eventId={id} />
+        <div className="details">
+          {/* Left side - Event details*/}
+          <div className="content">
+            <Image
+              src={image}
+              alt="Event Image"
+              width={800}
+              height={800}
+              className="banner"
+            />
+            <section className="flex-col">
+              <h2>Overview</h2>
+              <p>{overview}</p>
+            </section>
+
+            <section className="flex-col">
+              <h2>Event Details</h2>
+              <EventDetailItem
+                icon="/icons/calendar.svg"
+                alt="calendar"
+                label={date}
+              />
+              <EventDetailItem
+                icon="/icons/pin.svg"
+                alt="pin"
+                label={location}
+              />
+              <EventDetailItem
+                icon="/icons/clock.svg"
+                alt="clock"
+                label={time}
+              />
+              <EventDetailItem icon="/icons/mode.svg" alt="mode" label={mode} />
+              <EventDetailItem
+                icon="/icons/audience.svg"
+                alt="audience"
+                label={audience}
+              />
+            </section>
+
+            <EventAgenda agendaItems={agenda} />
+
+            <section className="flex-col">
+              <h2>About the organizer</h2>
+              <p>{organizer}</p>
+            </section>
+            <EventTags tags={tags} />
           </div>
-        </aside>
-      </div>
-      <div className="flex w-full flex-col gap-4 pt-20">
-        <div className="events">
-          {similarEvents.length > 0 &&
-            similarEvents.map((event: EventDocument) => (
-              <div key={event.id}>
-                <h2 className="text-2xl font-bold">Similar Events</h2>
-                <EventCard
-                  key={event.id}
-                  {...event}
-                />
-              </div>
-            ))}
+          {/* right side - Event booking */}
+          <aside className="booking">
+            <div className="signup-card">
+              <h2>Book Your Spot</h2>
+
+              <p className="text-sm">
+                {bookings > 0
+                  ? `Join ${bookings} people who have already booked their spot!`
+                  : "Be the first to book this event"}
+              </p>
+              <BookEventForm eventId={id} />
+            </div>
+          </aside>
         </div>
-      </div>
-    </section>
+        <div className="flex w-full flex-col gap-4 pt-20">
+          <div className="events">
+            {similarEvents.length > 0 &&
+              similarEvents.map((event: EventDocument) => (
+                <div key={event.id}>
+                  <h2 className="text-2xl font-bold">Similar Events</h2>
+                  <EventCard key={event.id} {...event} />
+                </div>
+              ))}
+          </div>
+        </div>
+      </section>
+    </Suspense>
   );
 }
