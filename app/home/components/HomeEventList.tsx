@@ -1,6 +1,5 @@
 import { EventDocument } from "@/database/event.model";
 import { EventCard } from "./EventCard";
-import { cache } from "react";
 
 export async function HomeEventList() {
   const response = await fetch(
