@@ -1,21 +1,30 @@
 "use client";
 import { BookingEvent } from "@/lib/actions/booking.actions";
+import posthog from "posthog-js";
 import { useState } from "react";
 
 export function BookEventForm({ eventId }: { eventId: string }) {
+  console.log("Event ID in BookEventForm:", eventId);
+
   const [email, setEmail] = useState("");
   const [isSubmitted, setSubmission] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
-    console.log("THIS IS THE EMAIL ===============================================>");
-    console.log("THIS IS THE EVENT ID ===============================================>", eventId); 
-
-    const {booking} = await BookingEvent({ userEmail: email, eventId: eventId });
-    if(!booking) return;
     event.preventDefault();
-    setTimeout(() => {
+
+    const { success, message } = await BookingEvent({
+      userEmail: email,
+      eventId: eventId,
+    });
+    if (!success) {
+      setSubmission(false);
+      posthog.captureException("event_booking_failed", { eventId, email });
+      console.error("Booking failed: =========>", message);
+    } else {
       setSubmission(true);
-    }, 1000);
+      posthog.capture("event_booked", { eventId, email });
+      console.log("Booking successful: ==========>", message);
+    }
   };
   return (
     <div id="book-event">

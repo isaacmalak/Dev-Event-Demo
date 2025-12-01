@@ -131,7 +131,7 @@ export default async function EventDetails({
                 ? `Join ${bookings} people who have already booked their spot!`
                 : "Be the first to book this event"}
             </p>
-            <BookEventForm eventId={_id} />
+            <BookEventForm eventId={id} />
           </div>
         </aside>
       </div>
