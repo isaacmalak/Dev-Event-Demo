@@ -1,7 +1,7 @@
-import { ExploreButton } from "./components/ExploreButton";
 import { Suspense } from "react";
-import { EventListSkeleton } from "./components/EventListSkeleton";
-import { HomeEventList } from "./components/HomeEventList";
+import { ExploreButton } from "./home/components/ExploreButton";
+import { HomeEventList } from "./home/components/HomeEventList";
+import { EventListSkeleton } from "./home/components/EventListSkeleton";
 
 export default async function Home() {
   return (
