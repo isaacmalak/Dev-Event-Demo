@@ -8,7 +8,7 @@ export default async function Home() {
     <section className="flex flex-1 flex-col">
       <h1 className="text-center">
         The Hub for every developing events <br />
-        Event you can't miss
+        Event you can&apos;t miss
       </h1>
       <p className="mt-5 text-center">
         Hackathons, Meetups, and conferences. All in one place
