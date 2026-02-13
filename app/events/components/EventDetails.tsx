@@ -99,8 +99,8 @@ export async function EventDetails({
         </aside>
       </div>
       <div className="flex w-full flex-col gap-4 pt-20">
+        <h2 className="text-2xl font-bold">Similar Events</h2>
         <div className="events">
-          <h2 className="text-2xl font-bold">Similar Events</h2>
           {similarEvents.length > 0 &&
             similarEvents.map((event: EventDocument) => (
               <div key={event.id}>
