@@ -100,10 +100,10 @@ export async function EventDetails({
       </div>
       <div className="flex w-full flex-col gap-4 pt-20">
         <div className="events">
+          <h2 className="text-2xl font-bold">Similar Events</h2>
           {similarEvents.length > 0 &&
             similarEvents.map((event: EventDocument) => (
               <div key={event.id}>
-                <h2 className="text-2xl font-bold">Similar Events</h2>
                 <EventCard key={event.id} {...event} />
               </div>
             ))}
